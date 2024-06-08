@@ -7,4 +7,6 @@ class Contact {
     required this.name,
     required this.id,
   });
+
+  static fromMap(Map<String, dynamic> row) {}
 }

@@ -1,5 +1,6 @@
 import 'package:contactapp/controllers/contact_controller.dart';
 import 'package:contactapp/views/widgets/addcontact.dart';
+import 'package:contactapp/views/widgets/contacts.dart';
 import 'package:contactapp/views/widgets/mycard.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,6 @@ class _ContactsscreenState extends State<Contactsscreen> {
   }
 
   final contactcontroller = ContactController();
-  
 
   addContact() async {
     final responce = await showDialog(
@@ -73,6 +73,9 @@ class _ContactsscreenState extends State<Contactsscreen> {
               height: 20,
             ),
             const Mycard(),
+            const SizedBox(
+              height: 20,
+            ),
             FutureBuilder(
                 future: contactcontroller.list,
                 builder: (context, snapshot) {
@@ -88,22 +91,20 @@ class _ContactsscreenState extends State<Contactsscreen> {
                       ),
                     );
                   }
-                  if (snapshot.data!.isNotEmpty || snapshot.data != null) {
+                  if (snapshot.data!.isEmpty || snapshot.data == null) {
                     return const Center(
                       child: Text('Contactlar yoq!'),
                     );
                   }
-                  return Expanded(child: ListView.builder(
-                    itemBuilder: (context, index) {
-                      final contact = snapshot.data![index];
-                      return ListTile(
-                        title: Text(
-                          contact.name,
-                          style: TextStyle(fontWeight: FontWeight.bold),
-                        ),
-                      );
-                    },
-                  ));
+                  return Expanded(
+                    child: ListView.builder(
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (context, index) {
+                        final contact = snapshot.data![index];
+                        return Contacts(contact: contact);
+                      },
+                    ),
+                  );
                 })
           ],
         ),

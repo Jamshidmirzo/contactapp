@@ -16,4 +16,12 @@ class ContactController {
   Future<void> addContact(String name, String number) {
     return contactdatabase.addContact(name, number);
   }
+
+  Future<void> updateContact(String name, String number, int id) {
+    return contactdatabase.updateContact(name, number, id);
+  }
+
+  Future<void> deleteContact(int id) {
+    return contactdatabase.deleteContact(id);
+  }
 }
